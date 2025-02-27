@@ -21,6 +21,7 @@ const LOCK_FILE = path.join(tmpDir, "digital_script.lock");
 if (!fs.existsSync(tmpDir)) {
 	fs.mkdirSync(tmpDir, { recursive: true });
 }
+
 if (fs.existsSync(LOCK_FILE)) {
 	console.log("⚠️ Script is already running. Exiting to prevent conflicts.");
 	process.exit(1);
@@ -99,24 +100,25 @@ folders.forEach((folder) => {
 	// Create new schema text file
 	console.log(`📝 Creating schema file: ${schemaFile}`);
 	const schemaContent = `[
-    {
-        "id": { "$oid": "" },
-        "_class": "",
-        "category": "",
-        "description": "${folder}",
-        "enabled": "",
-        "formId": "${formId}",
-        "img": { "$binary": { "base64": "", "subType": "" } },
-        "journey": "",
-        "name": "${folder}",
-        "type": "",
-        "wowJourney": {
-            "exists": false,
-            "reasonForNotTaking": [],
-            "link": ""
-        }
-    }
-]`;
+								{
+									"id": { "$oid": "" },
+									"_class": "",
+									"category": "",
+									"description": "${folder}",
+									"enabled": "",
+									"formId": "${formId}",
+									"img": { "$binary": { "base64": "", "subType": "" } },
+									"journey": "",
+									"name": "${folder}",
+									"type": "",
+									"wowJourney": {
+										"exists": false,
+										"reasonForNotTaking": [],
+										"link": ""
+									}
+								}
+							]`;
+
 	fs.writeFileSync(schemaFile, schemaContent);
 	fs.chmodSync(schemaFile, 0o644);
 
